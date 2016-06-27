@@ -43,7 +43,7 @@ _containeruser:
 	sudo useradd -rU $(CONTAINER_USER); true
 
 $(WEAVE):
-	cd ../weave && $(MAKE)
+	[ -f "$(WEAVE)" ]
 
 data_container_name = $(subst /,_,$(MOUNT_PATH))
 data_container_run = `docker ps -a | egrep '^.*\s+$(DATA_VOLUME_NAME)$$'`
