@@ -7,7 +7,7 @@ METADATA_VOL := /volumes/metadata.vol
 .DEFAULT_GOAL := install
 .PHONY: install clean enable start
 
-include ../make_utils/Makefile.help
+include ../docker_make_utils/Makefile.help
 
 install: $(CONVOY) $(SERVICE) enable start ##@default Installs, setups and starts convoy.
 

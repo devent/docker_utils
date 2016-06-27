@@ -2,7 +2,7 @@ WEAVE := /usr/local/bin/weave
 .DEFAULT_GOAL := run
 .PHONY: run clean
 
-include ../make_utils/Makefile.help
+include ../docker_make_utils/Makefile.help
 
 run: $(WEAVE) ##@default Installs and starts the weave network.
 	if ! $(WEAVE) status; then \

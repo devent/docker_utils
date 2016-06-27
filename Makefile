@@ -2,7 +2,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 .PHONY: weave convoy
 
-include make_utils/Makefile.help
+include docker_make_utils/Makefile.help
 
 weave: ##@targets Installs and setups the weave network.
 	cd weave && $(MAKE)
