@@ -19,7 +19,9 @@ clean: ##@targets Stops and removes convoy.
 	sudo rm $(SERVICE); true
 
 enable: $(SERVICE) ##@targets Enables convoy.
-	sudo systemctl enable convoy.service
+	if ! sudo systemctl status convoy.service|egrep '.*convoy.service; enabled;'>/dev/null; then \
+	sudo systemctl enable convoy.service ;\
+	fi
 
 check_data_vol = `sudo losetup | grep $(DATA_VOL)`
 check_metadata_vol = `sudo losetup | grep $(METADATA_VOL)`
@@ -31,8 +33,10 @@ start: $(DATA_VOL) $(METADATA_VOL) ##@targets Starts convoy.
 	if [ -z "$(check_metadata_vol)" ]; then \
 	sudo losetup /dev/loop6 $(METADATA_VOL); \
 	fi
-	sudo systemctl start convoy.service
-	sudo systemctl status convoy.service
+	if ! sudo systemctl status convoy.service>/dev/null; then \
+	sudo systemctl start convoy.service ;\
+	sudo systemctl status convoy.service ;\
+	fi
 	
 $(CONVOY):
 	if [ ! -f "/tmp/convoy.tar.gz" ]; then \

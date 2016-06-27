@@ -5,12 +5,12 @@ WEAVE := /usr/local/bin/weave
 include ../docker_make_utils/Makefile.help
 
 run: $(WEAVE) ##@default Installs and starts the weave network.
-	if ! $(WEAVE) status; then \
+	if ! $(WEAVE) status>/dev/null; then \
 	$(WEAVE) launch; \
 	fi
 
 test: $(WEAVE) ##@targets Tests if the weave network is active.
-	$(WEAVE) status
+	$(WEAVE) status/dev/null
 
 stop: test ##@targets Stops the weave network.
 	$(WEAVE) stop
