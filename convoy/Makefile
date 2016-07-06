@@ -23,14 +23,14 @@ enable: $(SERVICE) ##@targets Enables convoy.
 	sudo systemctl enable convoy.service ;\
 	fi
 
-check_data_vol = `sudo losetup | grep $(DATA_VOL)`
-check_metadata_vol = `sudo losetup | grep $(METADATA_VOL)`
+check_data_vol = sudo losetup | grep $(DATA_VOL)>/dev/null
+check_metadata_vol = sudo losetup | grep $(METADATA_VOL)>/dev/null
 
 start: $(DATA_VOL) $(METADATA_VOL) ##@targets Starts convoy.
-	if [ -z "$(check_data_vol)" ]; then \
+	if ! $(check_data_vol); then \
 	sudo losetup /dev/loop5 $(DATA_VOL); \
 	fi
-	if [ -z "$(check_metadata_vol)" ]; then \
+	if ! $(check_metadata_vol); then \
 	sudo losetup /dev/loop6 $(METADATA_VOL); \
 	fi
 	if ! sudo systemctl status convoy.service>/dev/null; then \
